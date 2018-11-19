@@ -1,9 +1,8 @@
 package pl.coderslab.controller;
 
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Book;
 import pl.coderslab.service.MemoryBookService;
 
@@ -38,5 +37,25 @@ public class BookController {
     @RequestMapping("/{id}")
     public Book getBook(@PathVariable("id") Long id){
         return memoryBookService.getBook(id);
+    }
+
+    @GetMapping("/add")
+    @ResponseBody
+    public String form(){
+        return "Add Book\n" +
+                "<form action=\"/books/\" method=\"post\">\n" +
+                "    Id: <input type=\"number\" name=\"id\"></br>\n" +
+                "    Isbn: <input type=\"text\" name=\"isbn\"></br>\n" +
+                "    Title: <input type=\"text\" name=\"title\"></br>\n" +
+                "    Author: <input type=\"text\" name=\"author\"></br>\n" +
+                "    Publisher: <input type=\"text\" name=\"publisher\"></br>\n" +
+                "    Type: <input type=\"text\" name=\"type\"></br>\n" +
+                "    <input type=\"submit\" value=\"Add\">\n" +
+                "</form>";
+    }
+
+    @PostMapping(value = "/")
+    public Book addBook(@RequestBody Book book){
+        return memoryBookService.addBook(book);
     }
 }

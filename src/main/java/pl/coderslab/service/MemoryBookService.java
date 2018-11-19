@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class MemoryBookService {
-    private List<Book> list;
+    private static List<Book> list;
 
     public MemoryBookService() {
         list = new ArrayList<>();
@@ -31,6 +31,12 @@ public class MemoryBookService {
             }
         }
         return null;
+    }
+
+    public Book addBook(Book book){
+        list.add(book);
+        System.out.println(list.size());
+        return book;
     }
 
     public void editBook(Book book){
